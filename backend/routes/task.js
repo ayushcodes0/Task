@@ -84,4 +84,78 @@ router.put("/update-task/:id", authenticateToken, async(req,res)=>{
     }
 })
 
+// Here I am Updating Imp Tasks
+router.put("/update-important-task/:id", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const currentTask = await Task.findById(id);
+        const impTask = currentTask.important;
+        await Task.findByIdAndUpdate(id, {important: !impTask});
+
+        res.status(200).json({
+            message: "Important Task Updated Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
+// Here I am Updating Complete Tasks
+router.put("/update-complete-task/:id", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const currentTask = await Task.findById(id);
+        const compTask = currentTask.complete;
+        await Task.findByIdAndUpdate(id, {complete: !compTask});
+
+        res.status(200).json({
+            message: "Complete Task Updated Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
+// Here I am fetching Important Tasks
+router.get("/get-important-tasks", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.headers;
+        const currentUser = await User.findById(id).populate({path: "task", match: {important: true}, options: {sort: {createdAt: -1}}});
+        
+        res.status(200).json({
+            data: currentUser,
+            message: "Task Fetched Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
+// Here I am fetching Completed Tasks
+router.get("/get-completed-tasks", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.headers;
+        const currentUser = await User.findById(id).populate({path: "task", match: {complete: true}, options: {sort: {createdAt: -1}}});
+        
+        res.status(200).json({
+            data: currentUser,
+            message: "Task Fetched Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
 module.exports = router;
