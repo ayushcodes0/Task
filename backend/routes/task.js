@@ -66,4 +66,22 @@ router.delete("/delete-task/:id", authenticateToken, async(req,res)=>{
     }
 })
 
+// Here I am Updating Tasks
+router.put("/update-task/:id", authenticateToken, async(req,res)=>{
+    try {
+        const {title, description} = req.body;
+        const {id} = req.params;
+        await Task.findByIdAndUpdate(id, {title: title, description: description});
+
+        res.status(200).json({
+            message: "Task Updated Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
 module.exports = router;
