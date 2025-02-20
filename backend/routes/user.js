@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const User = require("../models/user.js");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 // This is my Sign-in Section
@@ -49,7 +50,12 @@ router.post("/login", async(req,res)=>{
         }
         bcrypt.compare(password, existingUser.password, (err,data)=>{
             if(data){
-                const token = "";
+                const authClaims = {name: username, jti: jwt.sign({}, "secret")};
+                const token = jwt.sign(authClaims, "secret", {expiresIn: "2d"});
+                res.status(200).json({
+                    id: existingUser._id,
+                    token: token
+                })
             }
             else{
                 return res.status(400).json({
@@ -57,19 +63,7 @@ router.post("/login", async(req,res)=>{
                 })
             }
         })
-        const newUser = await new User({
-            username: username,
-            email: email,
-            password: hashPassword,
-            totalPoints: 100
-        })
-        await newUser.save();
-
-        return res.status(200).json({
-            message: "Sign In Successfully",
-            points: 100
-        } 
-    )
+        
     } catch (error) {
         console.log(error)
         res.status(400).json({
