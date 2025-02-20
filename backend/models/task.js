@@ -17,7 +17,7 @@ const taskSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    points: {
+    point: {
         type: Number,
         default: 0
     },

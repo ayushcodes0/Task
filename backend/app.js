@@ -4,6 +4,7 @@ require("./connection/connectDb.js");
 const cors = require("cors");
 
 const UserApi = require("./routes/user");
+const TaskApi = require("./routes/task");
 
 const app = express()
 app.use(cors());
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3000
 
 // Main Routes
 app.use("/api/v1",UserApi);
+app.use("/api/v2",TaskApi);
 
 
 

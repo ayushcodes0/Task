@@ -48,13 +48,16 @@ router.post("/login", async(req,res)=>{
         if(!existingUser){
             return res.status(400).json({message: "Invalid Credentials"})
         }
-        bcrypt.compare(password, existingUser.password, (err,data)=>{
+        bcrypt.compare(password, existingUser.password, async(err,data)=>{
             if(data){
+                existingUser.totalPoints = (existingUser.totalPoints || 0) + 50;
+                await existingUser.save();
                 const authClaims = {name: username, jti: jwt.sign({}, "secret")};
                 const token = jwt.sign(authClaims, "secret", {expiresIn: "2d"});
                 res.status(200).json({
                     id: existingUser._id,
-                    token: token
+                    token: token,
+                    points: 50
                 })
             }
             else{
@@ -64,6 +67,7 @@ router.post("/login", async(req,res)=>{
             }
         })
         
+
     } catch (error) {
         console.log(error)
         res.status(400).json({
