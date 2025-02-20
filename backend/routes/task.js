@@ -33,11 +33,30 @@ router.post("/create-task", authenticateToken, async(req,res)=>{
 router.get("/get-all-tasks", authenticateToken, async(req,res)=>{
     try {
         const {id} = req.headers;
-        const currentUser = await User.findById(id);
+        const currentUser = await User.findById(id).populate({path: "task", options: {sort: {createdAt: -1}}});
         
         res.status(200).json({
             data: currentUser,
             message: "Task Fetched Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
+// Here I am Deleting Tasks
+router.delete("/delete-task/:id", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const userId = req.headers.id;
+        await Task.findByIdAndDelete(id);
+        await User.findByIdAndUpdate(userId, {$pull: {task: id}});
+
+        res.status(200).json({
+            message: "Task Deleted Successfully"
         })
         
     } catch (error) {
