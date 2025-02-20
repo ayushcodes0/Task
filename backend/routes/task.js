@@ -1,8 +1,11 @@
 const router = require("express").Router()
 const User = require("../models/user.js");
 const Task = require("../models/task.js");
+const authenticateToken = require("./auth.js");
 
-router.post("/create-task", async(req,res)=>{
+
+// Here I am creating Tasks
+router.post("/create-task", authenticateToken, async(req,res)=>{
     try {
         const {title, description, point} = req.body;
         const {id} = req.headers;
@@ -20,6 +23,24 @@ router.post("/create-task", async(req,res)=>{
 
     } catch (error) {
         console.log(error)
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
+// Here I am fetching Tasks
+router.get("/get-all-tasks", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.headers;
+        const currentUser = await User.findById(id);
+        
+        res.status(200).json({
+            data: currentUser,
+            message: "Task Fetched Successfully"
+        })
+        
+    } catch (error) {
         res.status(400).json({
             message: "Internal Server Error"
         })
