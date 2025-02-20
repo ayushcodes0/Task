@@ -127,9 +127,9 @@ router.get("/get-important-tasks", authenticateToken, async(req,res)=>{
     try {
         const {id} = req.headers;
         const currentUser = await User.findById(id).populate({path: "task", match: {important: true}, options: {sort: {createdAt: -1}}});
-        
+        const impTask = currentUser.task;
         res.status(200).json({
-            data: currentUser,
+            data: impTask,
             message: "Task Fetched Successfully"
         })
         
@@ -145,9 +145,27 @@ router.get("/get-completed-tasks", authenticateToken, async(req,res)=>{
     try {
         const {id} = req.headers;
         const currentUser = await User.findById(id).populate({path: "task", match: {complete: true}, options: {sort: {createdAt: -1}}});
-        
+        const compTask = currentUser.task;
         res.status(200).json({
-            data: currentUser,
+            data: compTask,
+            message: "Task Fetched Successfully"
+        })
+        
+    } catch (error) {
+        res.status(400).json({
+            message: "Internal Server Error"
+        })
+    }
+})
+
+// Here I am fetching Incompleted Tasks
+router.get("/get-incompleted-tasks", authenticateToken, async(req,res)=>{
+    try {
+        const {id} = req.headers;
+        const currentUser = await User.findById(id).populate({path: "task", match: {complete: false}, options: {sort: {createdAt: -1}}});
+        const compTask = currentUser.task;
+        res.status(200).json({
+            data: compTask,
             message: "Task Fetched Successfully"
         })
         
