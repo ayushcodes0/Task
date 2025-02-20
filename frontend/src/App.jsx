@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Home from './pages/Home'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Alltask from './pages/Alltask';
 import Importanttask from './pages/Importanttask'
 import Completedtask from './pages/Completedtask'
 import Incompletedtask from './pages/Incompletedtask'
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import {useSelector} from "react-redux";
 
 const App = () => {
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
+  useEffect(() => {
+    if(!isLoggedIn){
+      navigate("/login");
+    }
+  }, [])
+  
   return (
     <div class="bg-zinc-900 text-zinc-200 text-3xl h-screen p-2 relative ">
-      <Router>
         <Routes>
           <Route exact path='/' element= {<Home/>}>
             <Route index element= {<Alltask/>}/>
@@ -22,7 +30,6 @@ const App = () => {
           <Route path='/signup' element = {<Signup/>}/>
           <Route path='/login' element = {<Login/>}/>
         </Routes>
-      </Router>
     </div>
   )
 }
