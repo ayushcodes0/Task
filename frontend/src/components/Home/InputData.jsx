@@ -13,6 +13,7 @@ const InputData = ({inputDiv,setInputDiv}) => {
                 </div>
                 <input type="text" placeholder='Enter title' name='title' className='w-full bg-zinc-700 px-3 py-2 rounded-xl text-[24px] outline-none' />
                 <textarea name="description" placeholder='Enter description' cols="30" rows="10" className='w-full bg-zinc-700 px-3 py-1 rounded-xl resize-none text-[24px] outline-none'></textarea>
+                <input type="number" placeholder='Enter point' name='point' className='w-full bg-zinc-700 px-3 py-2 rounded-xl text-[24px] outline-none' />
                 <button  className='bg-blue-500 py-1 rounded-xl hover:scale-95 transition-all duration-300 cursor-pointer'>Add</button>
             </div>
         </div>
