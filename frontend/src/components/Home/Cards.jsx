@@ -5,6 +5,7 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { IoAddOutline } from "react-icons/io5";
 import { TiTick } from "react-icons/ti";
+import axios from 'axios';
 
 
 
@@ -45,8 +46,19 @@ const Cards = ({home, setInputDiv, data}) => {
     //         points: 200
     //     },
     // ]
-    const handleComplete = ()=>{
-        
+    const headers = {
+        id: localStorage.getItem("id"),
+        authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+
+    const handleComplete = async(id)=>{
+        try {
+            await axios.put(`http//localhost:3000/api/v2/get-completed-tasks/${id}`,{
+                headers
+            })
+        } catch (error) {
+            
+        }
     }
   return (
     <div className='grid grid-cols-4 gap-4'>
@@ -59,7 +71,7 @@ const Cards = ({home, setInputDiv, data}) => {
                     <p className='text-zinc-300 text-[18px]'><span className='text-zinc-400'>points: </span> {item.points}</p>
                 </div>
                 <div className=' text-[22px] flex justify-between'>
-                    <button className="text-red-400 cursor-pointer" onClick={handleComplete}>
+                    <button className="text-red-400 cursor-pointer" onClick={()=>{handleComplete(item._id)}}>
                         {item.complete === false? <FaCircleNotch className='text-red-400' /> : <TiTick className='text-green-400 text-[24px]' /> }
                     </button>   
                     <button className="text-gray-500 cursor-pointer hover:text-red-500">
