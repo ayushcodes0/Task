@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Sidebar = () => {
     const data = [
@@ -20,6 +20,15 @@ const Sidebar = () => {
             link: "/incompletedTask"
         },
     ]
+
+    const navigate = useNavigate();
+
+    const logout = ()=>{
+        localStorage.removeItem("id");
+        localStorage.removeItem("token");
+        navigate("/signup")
+    }
+
   return (
     <>
       <div className='flex flex-col gap-4'>
@@ -38,7 +47,7 @@ const Sidebar = () => {
             }
         </div>
       </div>
-      <button className='bg-zinc-800 rounded-xl p-2 text-[16px] hover:scale-95 cursor-pointer transition-all duration-300' >Log Out</button>
+      <button className='bg-zinc-800 rounded-xl p-2 text-[16px] hover:scale-95 cursor-pointer transition-all duration-300' onClick={logout} >Log Out</button>
     </>
   )
 }
