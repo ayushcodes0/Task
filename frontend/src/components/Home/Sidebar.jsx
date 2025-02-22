@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -21,6 +22,8 @@ const Sidebar = () => {
         },
     ]
 
+    const [daata, setDaata] = useState()
+
     const navigate = useNavigate();
 
     const logout = ()=>{
@@ -29,13 +32,30 @@ const Sidebar = () => {
         navigate("/signup")
     }
 
+    const headers = {
+        id: localStorage.getItem("id"),
+        authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+
+    const fetch = async()=>{
+        const response = await axios.get("http://localhost:3000/api/v2/get-all-tasks",{
+            headers: headers
+        })
+        setDaata(response.data.data);
+    }
+
+    useEffect(() => {
+        fetch();
+    }, [])
+    
+
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <div className='flex flex-col gap-1'>
-            <h4 className='font-semibold text-[22px]'>ayushcodes0</h4>
-            <p className='text-zinc-500 text-[16px]'>ayush94@gmail.com</p>
-        </div>
+        {daata && <div className='flex flex-col gap-1'>
+            <h4 className='font-semibold text-[22px]'>{daata.username}</h4>
+            <p className='text-zinc-500 text-[16px]'>{daata.email}</p>
+        </div>}
         <hr className=' text-zinc-700' />
         <div className='flex flex-col gap-4 mt-4 text-zinc-400'>
             {

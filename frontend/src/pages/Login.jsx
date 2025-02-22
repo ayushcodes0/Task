@@ -27,7 +27,6 @@ const Login = () => {
       }
       else{
         const response = await axios.post("http://localhost:3000/api/v1/login", data);
-        console.log(response);
         localStorage.setItem("id", response.data.id);
         localStorage.setItem("token", response.data.token);
         dispatch(authActions.login());

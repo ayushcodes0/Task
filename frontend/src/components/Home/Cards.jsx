@@ -12,39 +12,42 @@ import { TiTick } from "react-icons/ti";
 
 
 
-const Cards = ({home, setInputDiv}) => {
-    const data = [
-        {
-            title: "DSA Practice",
-            desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-            status: "complete",
-            points: 100
-        },
-        {
-            title: "DSA Practice",
-            desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-            status: "incomplete",
-            points: 200
-        },
-        {
-            title: "DSA Practice",
-            desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-            status: "complete",
-            points: 300
-        },
-        {
-            title: "DSA Practice",
-            desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-            status: "incomplete",
-            points: 50
-        },
-        {
-            title: "DSA Practice",
-            desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-            status: "incomplete",
-            points: 200
-        },
-    ]
+const Cards = ({home, setInputDiv, data}) => {
+    // const data = [
+    //     {
+    //         title: "DSA Practice",
+    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
+    //         status: "complete",
+    //         points: 100
+    //     },
+    //     {
+    //         title: "DSA Practice",
+    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
+    //         status: "incomplete",
+    //         points: 200
+    //     },
+    //     {
+    //         title: "DSA Practice",
+    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
+    //         status: "complete",
+    //         points: 300
+    //     },
+    //     {
+    //         title: "DSA Practice",
+    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
+    //         status: "incomplete",
+    //         points: 50
+    //     },
+    //     {
+    //         title: "DSA Practice",
+    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
+    //         status: "incomplete",
+    //         points: 200
+    //     },
+    // ]
+    const handleComplete = ()=>{
+        
+    }
   return (
     <div className='grid grid-cols-4 gap-4'>
       {data && data.map((item,index)=>{
@@ -56,8 +59,8 @@ const Cards = ({home, setInputDiv}) => {
                     <p className='text-zinc-300 text-[18px]'><span className='text-zinc-400'>points: </span> {item.points}</p>
                 </div>
                 <div className=' text-[22px] flex justify-between'>
-                    <button className="text-red-400 cursor-pointer">
-                        {item.status == "complete"? <FaCircleNotch className='text-red-400' /> : <TiTick className='text-green-400 text-[24px]' /> }
+                    <button className="text-red-400 cursor-pointer" onClick={handleComplete}>
+                        {item.complete === false? <FaCircleNotch className='text-red-400' /> : <TiTick className='text-green-400 text-[24px]' /> }
                     </button>   
                     <button className="text-gray-500 cursor-pointer hover:text-red-500">
                         <FaHeart />

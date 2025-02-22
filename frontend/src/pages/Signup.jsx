@@ -24,7 +24,6 @@ const Signup = () => {
       }
       else{
         const response = await axios.post("http://localhost:3000/api/v1/sign-in", data);
-        console.log(response);
         navigate("/login");
         
       }
