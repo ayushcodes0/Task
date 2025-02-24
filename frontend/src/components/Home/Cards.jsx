@@ -39,6 +39,17 @@ const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
             console.log(error);
         }
     }
+    const deleteTask = async(id)=>{
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/v2/delete-task/${id}`,{},{
+                headers
+            })
+            fetchAllTasks();
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
   return (
     <div className='grid grid-cols-4 gap-4'>
@@ -60,7 +71,7 @@ const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
                     <button className="text-blue-500 cursor-pointer hover:text-blue-700">
                         <MdEdit />
                     </button>
-                    <button className="text-gray-500 cursor-pointer hover:text-red-500">
+                    <button onClick={()=>{deleteTask(item._id)}} className="text-gray-500 cursor-pointer hover:text-red-500">
                         <MdDelete />
                     </button>
                 </div>

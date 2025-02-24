@@ -48,7 +48,7 @@ router.get("/get-all-tasks", authenticateToken, async(req,res)=>{
 })
 
 // Here I am Deleting Tasks
-router.delete("/delete-task/:id", authenticateToken, async(req,res)=>{
+router.delete("/delete-task/:id", async(req,res)=>{
     try {
         const {id} = req.params;
         const userId = req.headers.id;
