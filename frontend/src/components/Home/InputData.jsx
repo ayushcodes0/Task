@@ -1,8 +1,35 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 import { IoMdClose } from "react-icons/io";
 
 
 const InputData = ({inputDiv,setInputDiv}) => {
+  const [data, setData] = useState({title: "", description: "", point: ""})
+  const headers = {
+    id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+
+  const change = (e)=>{
+    e.preventDefault();
+    const {name, value} = e.target;
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
+
+  const submit = async()=>{
+    if(data.title === "" || data.description === "" || data.point === ""){
+      alert("All fields are required");
+    }
+    else{
+      await axios.post("http://localhost:3000/api/v2/create-task", data, {
+        headers
+      })
+    }
+  }
+
   return (
     <>
         <div className={`${inputDiv} top-0 left-0 opacity-70 h-screen w-full bg-zinc-900`}></div>
@@ -11,10 +38,10 @@ const InputData = ({inputDiv,setInputDiv}) => {
                 <div className='flex justify-end mt-[-15px]'>
                     <button onClick={()=>setInputDiv("hidden")} className='text-zinc-500 cursor-pointer'><IoMdClose /></button>
                 </div>
-                <input type="text" placeholder='Enter title' name='title' className='w-full bg-zinc-700 px-3 py-2 rounded-xl text-[24px] outline-none' />
-                <textarea name="description" placeholder='Enter description' cols="30" rows="10" className='w-full bg-zinc-700 px-3 py-1 rounded-xl resize-none text-[24px] outline-none'></textarea>
-                <input type="number" placeholder='Enter point' name='point' className='w-full bg-zinc-700 px-3 py-2 rounded-xl text-[24px] outline-none' />
-                <button  className='bg-blue-500 py-1 rounded-xl hover:scale-95 transition-all duration-300 cursor-pointer'>Add</button>
+                <input onChange={change} value={data.title} type="text" placeholder='Enter title' name='title' className='w-full bg-zinc-700 px-3 py-2 rounded-xl text-[24px] outline-none' />
+                <textarea onChange={change} value={data.description} name="description" placeholder='Enter description' cols="30" rows="10" className='w-full bg-zinc-700 px-3 py-1 rounded-xl resize-none text-[24px] outline-none'></textarea>
+                <input onChange={change} value={data.point} type="number" placeholder='Enter point' name='point' className='w-full bg-zinc-700 px-3 py-2 rounded-xl text-[24px] outline-none' />
+                <button onClick={submit}  className='bg-blue-500 py-1 rounded-xl hover:scale-95 transition-all duration-300 cursor-pointer'>Add</button>
             </div>
         </div>
     </>
