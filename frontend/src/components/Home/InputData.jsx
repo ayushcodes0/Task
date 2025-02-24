@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { IoMdClose } from "react-icons/io";
 
 
-const InputData = ({inputDiv,setInputDiv}) => {
-  const [data, setData] = useState({title: "", description: "", point: ""})
+const InputData = ({inputDiv,setInputDiv, fetchAllTasks}) => {
+  const [data, setData] = useState({title: "", description: "", point: null})
   const headers = {
     id: localStorage.getItem("id"),
     authorization: `Bearer ${localStorage.getItem("token")}`
@@ -20,13 +20,21 @@ const InputData = ({inputDiv,setInputDiv}) => {
   }
 
   const submit = async()=>{
-    if(data.title === "" || data.description === "" || data.point === ""){
-      alert("All fields are required");
-    }
-    else{
-      await axios.post("http://localhost:3000/api/v2/create-task", data, {
-        headers
-      })
+    try {
+      if(data.title === "" || data.description === "" || data.point === ""){
+        alert("All fields are required");
+      }
+      else{
+        await axios.post("http://localhost:3000/api/v2/create-task", data, {
+          headers
+        })
+        
+      }
+      setInputDiv("hidden")
+      setData({title: "", description: "" , point: 0})
+      fetchAllTasks();
+    } catch (error) {
+      console.log(error)
     }
   }
 

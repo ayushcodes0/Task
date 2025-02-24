@@ -33,7 +33,7 @@ useEffect(() => {
         </div>
         <Cards setInputDiv = {setInputDiv}  home={"true"} data = {data} fetchAllTasks={fetchAllTasks}/>
       </div>
-      <InputData inputDiv = {inputDiv} setInputDiv = {setInputDiv}/>
+      <InputData inputDiv = {inputDiv} setInputDiv = {setInputDiv} fetchAllTasks={fetchAllTasks}/>
     </>
   )
 }
