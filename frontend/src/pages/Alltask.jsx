@@ -14,16 +14,15 @@ const Alltask = () => {
     authorization: `Bearer ${localStorage.getItem("token")}`
   }
 
-  const fetch = async()=>{
+  const fetchAllTasks = async()=>{
       const response = await axios.get("http://localhost:3000/api/v2/get-all-tasks",{
           headers: headers
       })
       setData(response.data.data.task);
   }
-  console.log(data);
 
 useEffect(() => {
-    fetch();
+    fetchAllTasks();
 }, [])
 
   return (
@@ -32,7 +31,7 @@ useEffect(() => {
         <div className="flex items-end justify-end p-4">
           <button onClick={()=>setInputDiv("fixed")}><IoAddOutline className='text-3xl text-black bg-zinc-400 rounded-4xl cursor-pointer' /></button>
         </div>
-        <Cards setInputDiv = {setInputDiv}  home={"true"} data = {data}/>
+        <Cards setInputDiv = {setInputDiv}  home={"true"} data = {data} fetchAllTasks={fetchAllTasks}/>
       </div>
       <InputData inputDiv = {inputDiv} setInputDiv = {setInputDiv}/>
     </>

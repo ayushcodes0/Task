@@ -13,39 +13,7 @@ import axios from 'axios';
 
 
 
-const Cards = ({home, setInputDiv, data}) => {
-    // const data = [
-    //     {
-    //         title: "DSA Practice",
-    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-    //         status: "complete",
-    //         points: 100
-    //     },
-    //     {
-    //         title: "DSA Practice",
-    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-    //         status: "incomplete",
-    //         points: 200
-    //     },
-    //     {
-    //         title: "DSA Practice",
-    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-    //         status: "complete",
-    //         points: 300
-    //     },
-    //     {
-    //         title: "DSA Practice",
-    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-    //         status: "incomplete",
-    //         points: 50
-    //     },
-    //     {
-    //         title: "DSA Practice",
-    //         desc: "I have to practice dsa from morning 8 to 12 and night 9 to 11",
-    //         status: "incomplete",
-    //         points: 200
-    //     },
-    // ]
+const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
     const headers = {
         id: localStorage.getItem("id"),
         authorization: `Bearer ${localStorage.getItem("token")}`
@@ -53,13 +21,25 @@ const Cards = ({home, setInputDiv, data}) => {
 
     const handleComplete = async(id)=>{
         try {
-            await axios.put(`http//localhost:3000/api/v2/get-completed-tasks/${id}`,{
+            await axios.put(`http://localhost:3000/api/v2/update-complete-task/${id}`,{},{
                 headers
             })
+            fetchAllTasks();
         } catch (error) {
-            
+            console.log(error);
         }
     }
+    const handleImportant = async(id)=>{
+        try {
+            await axios.put(`http://localhost:3000/api/v2/update-important-task/${id}`,{},{
+                headers
+            })
+            fetchAllTasks();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
   return (
     <div className='grid grid-cols-4 gap-4'>
       {data && data.map((item,index)=>{
@@ -67,14 +47,14 @@ const Cards = ({home, setInputDiv, data}) => {
             <div key={index} className=" flex flex-col justify-between h-[250px] p-6 bg-zinc-800 rounded-4xl">
                 <div className='flex flex-col gap-3'>
                     <h3 className='text-[22px] font-semibold'>{item.title}</h3>
-                    <p className='text-zinc-400 text-[16px]'>{item.desc}</p>
-                    <p className='text-zinc-300 text-[18px]'><span className='text-zinc-400'>points: </span> {item.points}</p>
+                    <p className='text-zinc-400 text-[16px]'>{item.description}</p>
+                    <p className='text-zinc-300 text-[18px]'><span className='text-zinc-400'>points: </span> {item.point}</p>
                 </div>
                 <div className=' text-[22px] flex justify-between'>
                     <button className="text-red-400 cursor-pointer" onClick={()=>{handleComplete(item._id)}}>
                         {item.complete === false? <FaCircleNotch className='text-red-400' /> : <TiTick className='text-green-400 text-[24px]' /> }
                     </button>   
-                    <button className="text-gray-500 cursor-pointer hover:text-red-500">
+                    <button onClick={()=>{handleImportant(item._id)}} className={`${item.important === true ? "text-red-500" : "text-gray-500"} cursor-pointer `}>
                         <FaHeart />
                     </button>
                     <button className="text-blue-500 cursor-pointer hover:text-blue-700">
