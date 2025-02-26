@@ -47,7 +47,7 @@ const Login = () => {
   return (
     <div>
       <div className='h-[98vh] flex items-center justify-center '>
-      <div className='w-2/7  bg-zinc-800 p-4 rounded-xl flex flex-col gap-4'>
+      <div className='w-[360px] md:w-[400px]  bg-zinc-800 p-4 rounded-xl flex flex-col gap-4'>
         <div className="text-2xl flex justify-center">Login</div>
         <hr className='w-full text-zinc-700' />
         <div className="flex flex-col gap-4 mt-8">

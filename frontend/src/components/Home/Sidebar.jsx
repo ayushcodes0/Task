@@ -26,11 +26,22 @@ const Sidebar = () => {
 
     const navigate = useNavigate();
 
-    const logout = ()=>{
+    const logout = async () => {
+        try {
+            await axios.put("http://localhost:3000/api/v1/reset-points", {}, {
+                headers: {
+                    id: localStorage.getItem("id"),
+                    authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+        } catch (error) {
+            console.error("Error resetting points:", error);
+        }
+    
         localStorage.removeItem("id");
         localStorage.removeItem("token");
-        navigate("/signup")
-    }
+        navigate("/signup");
+    };
 
     const headers = {
         id: localStorage.getItem("id"),

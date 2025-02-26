@@ -79,4 +79,27 @@ router.post("/login", async(req,res)=>{
     }
 })
 
+router.put("/reset-points", async (req, res) => {
+    try {
+        const userId = req.headers["id"];
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.totalPoints = 0;
+        await user.save();
+
+        res.status(200).json({ message: "Total points reset successfully" });
+    } catch (error) {
+        console.error("Error resetting points:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
 module.exports = router;
