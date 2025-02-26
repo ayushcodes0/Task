@@ -45,7 +45,6 @@ const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
                 headers
             })
             fetchAllTasks();
-            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -67,9 +66,6 @@ const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
                     </button>   
                     <button onClick={()=>{handleImportant(item._id)}} className={`${item.important === true ? "text-red-500" : "text-gray-500"} cursor-pointer `}>
                         <FaHeart />
-                    </button>
-                    <button className="text-blue-500 cursor-pointer hover:text-blue-700">
-                        <MdEdit />
                     </button>
                     <button onClick={()=>{deleteTask(item._id)}} className="text-gray-500 cursor-pointer hover:text-red-500">
                         <MdDelete />
