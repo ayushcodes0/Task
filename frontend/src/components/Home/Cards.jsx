@@ -19,6 +19,13 @@ const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
         authorization: `Bearer ${localStorage.getItem("token")}`
       }
 
+      const fetchUsers = async()=>{
+        const response = await axios.get("http://localhost:3000/api/v2/get-user",{
+            headers: headers
+        })
+        setCurrentUser(response.data.data);
+    }
+
     const handleComplete = async(id)=>{
         try {
             await axios.put(`http://localhost:3000/api/v2/update-complete-task/${id}`,{},{
@@ -35,6 +42,7 @@ const Cards = ({home, setInputDiv, data, fetchAllTasks}) => {
                 headers
             })
             fetchAllTasks();
+            
         } catch (error) {
             console.log(error);
         }

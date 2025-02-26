@@ -106,9 +106,19 @@ router.put("/update-important-task/:id", authenticateToken, async(req,res)=>{
 // Here I am Updating Complete Tasks
 router.put("/update-complete-task/:id", authenticateToken, async(req,res)=>{
     try {
+        const userId = req.headers["id"];
         const {id} = req.params;
         const currentTask = await Task.findById(id);
         const compTask = currentTask.complete;
+        const user = await User.findById(userId);
+        if(!compTask){
+            user.totalPoints += currentTask.point
+        }
+        else{
+            user.totalPoints -= currentTask.point
+            if(user.totalPoints <0) user.totalPoints = 0
+        }
+        await user.save();
         await Task.findByIdAndUpdate(id, {complete: !compTask});
 
         res.status(200).json({
@@ -173,6 +183,23 @@ router.get("/get-incompleted-tasks", authenticateToken, async(req,res)=>{
         res.status(400).json({
             message: "Internal Server Error"
         })
+    }
+})
+
+
+router.get("/get-user", authenticateToken, async(req,res)=>{
+    try {
+        const userId = req.headers["id"];
+        const user = await User.findById(userId);
+        res.status(200).json({
+            data: user,
+            message: "Success"
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: "internal server error"
+        })
+        
     }
 })
 

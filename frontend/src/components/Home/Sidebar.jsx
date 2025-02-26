@@ -37,6 +37,8 @@ const Sidebar = () => {
         authorization: `Bearer ${localStorage.getItem("token")}`
     }
 
+    
+
     const fetch = async()=>{
         const response = await axios.get("http://localhost:3000/api/v2/get-all-tasks",{
             headers: headers
@@ -46,7 +48,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         fetch();
-    }, [])
+    }, [daata])
     
 
   return (
@@ -55,6 +57,7 @@ const Sidebar = () => {
         {daata && <div className='flex flex-col gap-1'>
             <h4 className='font-semibold text-[22px]'>{daata.username}</h4>
             <p className='text-zinc-500 text-[16px]'>{daata.email}</p>
+            <p className='text-[16px] text-zinc-500'>Total points: <span className='text-zinc-200'>{daata.totalPoints}</span></p>
         </div>}
         <hr className=' text-zinc-700' />
         <div className='flex flex-col gap-4 mt-4 text-zinc-400'>
