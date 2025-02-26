@@ -42,7 +42,7 @@ const InputData = ({inputDiv,setInputDiv, fetchAllTasks}) => {
     <>
         <div className={`${inputDiv} top-0 left-0 opacity-70 h-screen w-full bg-zinc-900`}></div>
         <div className={`${inputDiv} top-0 left-0 flex items-center justify-center h-screen w-full`}>
-            <div className="bg-zinc-800 w-3/8 p-8 rounded-xl shadow-lg shadow-zinc-950 flex flex-col gap-5">
+            <div className="bg-zinc-800 md:w-[500px] w-[360px] p-8 rounded-xl shadow-lg shadow-zinc-950 flex flex-col gap-5">
                 <div className='flex justify-end mt-[-15px]'>
                     <button onClick={()=>setInputDiv("hidden")} className='text-zinc-500 cursor-pointer'><IoMdClose /></button>
                 </div>
