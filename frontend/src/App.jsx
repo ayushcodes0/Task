@@ -23,7 +23,7 @@ const App = () => {
   }, [])
   
   return (
-    <div className="bg-zinc-900 text-zinc-200 text-3xl h-screen p-2 relative ">
+    <div className="bg-zinc-900 text-zinc-200 text-3xl p-2 relative ">
         <Routes>
           <Route exact path='/' element= {<Home/>}>
             <Route index element= {<Alltask/>}/>

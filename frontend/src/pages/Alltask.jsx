@@ -30,7 +30,7 @@ useEffect(() => {
 
   return (
     <>
-      <div>
+      <div className=''>
         <div className="flex items-end justify-end p-4">
           <button onClick={()=>setInputDiv("fixed")}><IoAddOutline className='text-3xl text-black bg-zinc-400 rounded-4xl cursor-pointer' /></button>
         </div>

@@ -4,11 +4,18 @@ import { Outlet } from 'react-router-dom'
 
 const Home = () => {
   return (
-    <div className='flex h-[98vh] gap-2'>
-      {/* This is my home page where I have first made sidebar which is common for all the pages */}
-      <div className=' w-2/10 border border-zinc-700 p-4 rounded-xl flex flex-col justify-between'><Sidebar/></div>
-      {/* This is my Outlet from where the routing happens for different pages */}
-      <div className=' w-8/10 border border-zinc-700 p-4 rounded-xl'><Outlet/></div>
+    <div className='flex h-[98vh] p-4 gap-2 overflow-hidden'>
+      {/* Fixed Sidebar */}
+      <div className='fixed top-[3vh] left-[2vh] w-[20%] h-[94vh] border border-zinc-700 p-4 rounded-xl flex flex-col justify-between bg-zinc-900 overflow-hidden'>
+        <Sidebar />
+      </div>
+      
+      {/* Main Content (Outlet) with internal scroll */}
+      <div className='ml-[22%] w-[78%] h-[94vh] border border-zinc-700 p-4 rounded-xl overflow-hidden'>
+        <div className='h-full overflow-y-auto pr-2'>
+          <Outlet />
+        </div>
+      </div>
     </div>
   )
 }
