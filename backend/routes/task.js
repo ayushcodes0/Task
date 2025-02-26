@@ -3,6 +3,8 @@ const User = require("../models/user.js");
 const Task = require("../models/task.js");
 const authenticateToken = require("./auth.js");
 
+// On this page I have created a lot of apis for different usecases 
+// for each task I have made a point field in taskModel from where on creating a task I am assigning how much point the task hold
 
 // Here I am creating Tasks
 router.post("/create-task", authenticateToken, async(req,res)=>{
@@ -112,7 +114,15 @@ router.put("/update-complete-task/:id", authenticateToken, async(req,res)=>{
         const compTask = currentTask.complete;
         const user = await User.findById(userId);
         if(!compTask){
-            user.totalPoints += currentTask.point
+            user.totalPoints += currentTask.point;
+
+            // Counting completed tasks
+            const completedTasks = await Task.countDocuments({ _id: { $in: user.task }, complete: true });
+
+            // Checking if user has completed 5 tasks
+            if (completedTasks + 1 === 5) {  // +1 because the current task is being marked complete
+                user.totalPoints += 200;  // Add bonus points
+            }
         }
         else{
             user.totalPoints -= currentTask.point

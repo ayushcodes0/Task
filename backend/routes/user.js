@@ -3,6 +3,9 @@ const User = require("../models/user.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+// This file is basically for User signin and user signup 
+// For points I have added that each time user login on the website he got 50 bonous points and on sign-in user got 100 points
+// To store the points of user I have created totalPoints in the userModel so i can track users total point
 
 // This is my Sign-in Section
 router.post("/sign-in", async(req,res)=>{
