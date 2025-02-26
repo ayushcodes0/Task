@@ -5,6 +5,9 @@ import InputData from '../components/Home/InputData';
 import axios from 'axios';
 
 
+// This is All task page where I am showing all the tasks
+// From this page I am showing Cards component and InputData component
+
 const Alltask = () => {
   const [inputDiv, setInputDiv] = useState("hidden")
   const [data, setData] = useState();
