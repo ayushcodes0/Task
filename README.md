@@ -1,6 +1,6 @@
 # 📌 Tasky - A Task Management App with Points
 
-Task is a **Tasky management application** where users can create, update, and track their tasks. Each task holds **points**, and users earn **extra rewards** when they complete tasks.
+Tasky is a **Task management application** where users can create, update, and track their tasks. Each task holds **points**, and users earn **extra rewards** when they complete tasks.
 
 ---
 
