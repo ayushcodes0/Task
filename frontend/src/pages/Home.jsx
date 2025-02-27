@@ -34,7 +34,7 @@ const Home = () => {
         </button>
       </div>
 
-      <div className='w-full md:w-[78%] md:ml-[22%] h-[94vh] border border-zinc-700 p-4 rounded-xl overflow-hidden'>
+      <div className='w-full md:w-[78%] md:ml-[22%]  h-[94vh] border border-zinc-700 p-4 rounded-xl overflow-hidden'>
         <div className='h-full overflow-y-auto pr-2'>
           <Outlet />
         </div>
