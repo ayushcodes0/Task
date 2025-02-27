@@ -9,6 +9,7 @@ Tasky is a **Task management application** where users can create, update, and t
 - ✅ **Mark Tasks as Important or Complete**
 - ✅ **Earn Points for Completing Tasks**
 - ✅ **Bonus 200 Points for Completing 5 Tasks **
+- ✅ **Bonus Points on login and singnup **
 - ✅ **Task Filtering: Completed, Incomplete, and Important Tasks**
 
 ---
